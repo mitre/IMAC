@@ -1,0 +1,51 @@
+extends layout
+
+mixin condensedRows(rows, id)
+   .mitre-id ID #{id}
+   each row in rows
+      //- Spit out non-blank rows
+      if(row != '')
+         .condensed-row!=row
+
+block javascripts
+   script(src="/javascripts/review.js")
+block stylesheets
+
+block content
+   //- Super Adjudication Popup
+   .popup
+      .popup-close.fa.fa-times-circle-o
+      .popup-contents
+   .disable-page
+   //- Main Content
+   .title-div
+      .page-title=title
+      .conflict-count Conflicted Queries:
+         span#conflict-count=conflicted_count
+   .review-filters
+      .adjudicator-filters.filters
+         b.adjudicators-header Adjudicator Filters
+         .adjudicators
+            each adjudicator in adjudicators
+               input.adjudicator(type="checkbox", id=adjudicator, checked="checked")
+               label(for=adjudicator)= adjudicator
+      .conflict-filters.filters
+         b.conflict-filter-header Conflict Filter
+         .conflict-filter.filters
+            input#all-matches(type="radio", name="radio" checked="checked")
+            label#all-button(for="all-matches") All
+            input#conflicts(type="radio", name="radio")
+            label#conflicts-button(for="conflicts") Conflicts
+   .query-container
+      each query in queries
+         - var conflict_class = query.is_conflicted ? 'conflicted' : 'non-conflicted'
+         div(class="query #{conflict_class}" involved-users=query.involved_users.join(' '))
+            .query-data
+               .collapse-icon.icon
+               .query-content
+                  +condensedRows(query.rows, query.id)
+               -var button_string = query.is_conflicted ? "Resolve " + query.conflict_count + " Conflicts" : "Review All"
+               button.resolve-button(query-id=query._id project-id=project_id)=button_string
+
+            .match-data(query-id=query._id)
+

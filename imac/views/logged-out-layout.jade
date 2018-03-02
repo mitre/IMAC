@@ -1,0 +1,21 @@
+doctype html
+html
+   head
+      title IMAC: #{title}
+      link(rel='stylesheet', href='/stylesheets/style.css')
+      link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js")
+      script(src="/javascripts/global.js")
+      script(src="/javascripts/logged-out-layout.js")
+
+      block stylesheets
+      block javascripts
+
+   body.logged-out-layout
+      .center-content
+         .content-header
+            .site-logo
+               i.fa.fa-gavel.fa-2x
+            .site-title IMAC
+            .site-subtitle ground truth adjudication tool
+         block content

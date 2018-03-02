@@ -1,0 +1,31 @@
+extends layout
+
+block stylesheets
+   script(src="/javascripts/import.js")
+
+block content
+   h3= title
+   .settings-container
+      form.import-form(name='import_runs' action=action method='post')
+         input(type='hidden' name='project_id' value=project._id)
+         ul.run-import
+            li Default Priority: #[i.fa.fa-info-circle.default-priority-info.info-button]
+            li
+               include query-priority
+            li Default Adjudications Per Query: #[i.fa.fa-info-circle.default-adjudications-info.info-button]
+            li
+               input(type='number' name='default_adjudications' value=2)
+            li.file-toggle
+               label
+                  input.text-radio(type='radio' name='file-toggle' checked)
+                  | Text Import
+               label
+                  input.file-radio(type='radio' name='file-toggle')
+                  | Upload File
+            li.text-import.import Run Data: #[i.fa.fa-info-circle.query-import-info.info-button]
+               textarea.run-data(name='run_data')
+            li.file-import.import Select File: #[i.fa.fa-info-circle.query-import-info.info-button]
+               input(type='file' name='import_file')
+            li
+               input.import-run-button(type='submit', value='Import Run')
+               a.cancel-button(href='/imac') Cancel

@@ -1,0 +1,11 @@
+doctype html
+html
+   li.menu-item
+      a#edit-user-button(href="/imac/users/edit/" + user) My User Settings
+   if admin
+      li.menu-item
+         a(href='/imac/users/') Manage Users
+      li.menu-item
+         a#new-project-button(href="/imac/project/new") Create New Project
+   li.menu-item
+      a#logout-button(href="/logout") Logout

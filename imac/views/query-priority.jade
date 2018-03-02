@@ -1,0 +1,6 @@
+doctype html
+html
+   - var selected = (query != undefined) ? query.priority : 2;
+   select.priority( name='default_priority')
+      each label, value in priorities
+         option(value=value selected=(value == selected))=label

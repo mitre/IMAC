@@ -1,0 +1,124 @@
+extends layout
+block javascripts
+   script(src='/javascripts/project.js')
+
+block content
+   .project-settings-container.settings-container
+      h3= title
+      form(name='project_settings', action='/imac/project/edit/' + project._id, method='post')
+         input(type='hidden', name='_id', value=project._id)
+         table.project-settings.settings-table
+            tr.project-setting
+               td.setting-label project name
+               td
+                  input.project-name(type='text', name='name', value=project.name)
+            tr.project-setting
+               td.setting-label adjudication question
+               td
+                  textarea.project-question(name='question')=project.question
+
+         h4#layout-settings-header.settings-header Layout Settings
+         #layout-settings-container
+            b Alignment
+            .alignment-settings
+               .close
+                  .input.close-input
+                     input(type='radio' value='close' name='alignment' checked=(project.alignment == 'close' || project.alignment == null))
+                  .example.close-example
+                     img.example-image(src='/images/close.png')
+               .centered
+                  .input.centered-input
+                     input(type='radio' value='centered' name='alignment' checked= (project.alignment == 'centered'))
+                  .example.centered-example
+                     img.example-image(src='/images/centered.png')
+
+            if (queries.length != 0)
+               b Fields
+               input#field-layout(type='hidden' name='field_layout' value=JSON.stringify(project.field_layout))
+               .field-settings-container
+                  .field-delimiter-container
+                     .field-list
+                        each field in project.fields
+                           .field(value=field)=field
+                              .handle
+                     .delimiter-list
+                        .field(value=' - ') -
+                           .handle
+                        .field(value=': ') :
+                           .handle
+                        .field(value=', ') ,
+                           .handle
+                        .field(value=' ') blank
+                           .handle
+                  .show-labels Show Labels:
+                     input#show-labels(type= 'checkbox' name='show_labels' checked=(project.show_labels ? 'checked' : undefined))
+                     input#row-labels(type='hidden' name='row_labels' value=JSON.stringify(project.row_labels))
+                  .field-settings.k-record
+                     each row, index in project.field_layout
+                        .field-row
+                           .row-label
+                              input.label(value=project.row_labels[index] size="8")
+                           each field in row
+                              .field(value=field)=field
+                                 .handle
+                     .field-row
+         .button-container
+            input(type='submit', value='Save Settings')
+            .cancel-label
+               a.cancel-button(href='/imac') Cancel
+
+      if (project.id != null)
+         h4#query-settings-header.settings-header Query Settings
+            a(href='/imac/import/' + project.id)
+               button.import-button Import Run
+
+         if (queries != null)
+            #query-container
+               #selected-container
+                  #selected-count
+                  #selected-buttons
+                     input.edit-many.menu-button(type='submit' value='Edited Selected')
+                     .menu-pointer
+                     .menu-container(id='edit-many')
+                        .query-settings
+                           b Priority:
+                           select.priority( name='default_priority')
+                              option(value='') --
+                              each label, value in priorities
+                                 option(value=value)=label
+                           b Required Adjudications
+                           input.required-adjudications(type='number' name='default_adjudications')
+                           input.edit-query(type='submit' value='Save' query-id='many')
+                     input.delete-many(type='submit' value='Delete Selected')
+                  table#query-list
+                     tr.header-row
+                        th
+                           input#check-all(type='checkbox')
+                        th.query-id Record ID
+                        th.priority Priority
+                        th.required-adjudications(title="Required Adjudications") Req. Adj.
+                        th.responses(title="Responses") Res.
+                        th.percent-complete % Complete
+                        th.query-buttons
+                     each query in queries
+                        - var query_id = query._id
+                        tr(id=query_id)
+                           td
+                              input.query-select(type='checkbox')
+                           td.query-id= query.record_id
+                           td.priority= priorities[query.priority]
+                           td.required-adjudications= (query.required_adjudications ? query.required_adjudications : '2')
+                           td.responses= query.responses
+                           td.percent-complete= (query.percent_complete ? query.percent_complete : '0%')
+                           td.query-buttons
+                              i.fa.fa-edit.menu-button
+                              .menu-pointer
+                              .menu-container(id=query_id + "-query-edit")
+                                 .query-settings
+                                    b Priority:
+                                    include query-priority
+                                    b Required Adjudications
+                                    input.required-adjudications(type='number' name='default_adjudications' value=query.required_adjudications)
+                                    input.edit-query(type='submit' value='Save' query-id=query_id)
+                              i.fa.fa-trash-o.delete-query(query-id=query_id)
+

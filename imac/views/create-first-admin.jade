@@ -1,0 +1,20 @@
+extends logged-out-layout
+block javascripts
+   script(src="/javascripts/create-user.js")
+
+block content
+   p.welcome-statement Welcome to IMAC!
+   p.welcome-statement Enter an email address and password to create the first admin account.
+   p.welcome-statement Be sure to remember this login information. You'll need it to create other admin accounts.
+   .create-account-form
+      form#create-first-admin.create-user(action='/create-first-admin' method='post')
+         .login-input
+            input#username(type="text" name="_id" required="true" value="Username: admin" disabled='true')
+         .login-input
+            input#email(type="email" name="email" required="true" placeholder="E-Mail Address")
+         .login-input
+            input#password(type="password" name="password" required="true" placeholder="Password")
+         .login-input
+            input#password-confirm(type="password" name="password-confirm" required="true" placeholder="Confirm Password")
+         .in
+            input#create-button.blue-button(type="submit" value="Create First Admin Account")

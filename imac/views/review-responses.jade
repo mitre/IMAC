@@ -1,0 +1,32 @@
+mixin condensedRows(rows, id)
+   .mitre-id ID #{id}
+   each row in rows
+      //- Spit out non-blank rows
+      if(row != '')
+         .condensed-row!=row
+
+ul.match-content
+   each match in responses
+      //- Only display if we have at least one judgement
+      if (match.true_users.length > 0 || match.false_users.length > 0 || match.maybe_users.length > 0)
+         //- Determine on the fly which responses have conflicts
+         - var conflict_class = (((match.true_users.length > 0 && match.false_users.length > 0) || match.maybe_users.length > 0) && match.super_adjudicated != true) ? 'conflicted' : 'non-conflicted'
+         li(class='match-container ' + conflict_class)
+            .match.match-button-target(id=match.id)
+               +condensedRows(match.rows, match.id)
+            .adjudications
+               if match.false_users.length > 0
+                  .false-users.users
+                     .false-icon.icon
+                     each judgement in match.false_users
+                        div(class="user #{judgement.username} #{judgement.super_adjudication_class}")=judgement.username
+               if match.true_users.length > 0
+                  .true-users.users
+                     .true-icon.icon
+                     each judgement in match.true_users
+                        div(class="user #{judgement.username} #{judgement.super_adjudication_class}")=judgement.username
+               if match.maybe_users.length > 0
+                  .maybe-users.users
+                     .maybe-icon.icon
+                     each judgement in match.maybe_users
+                        div(class="user #{judgement.username} #{judgement.super_adjudication_class}")=judgement.username

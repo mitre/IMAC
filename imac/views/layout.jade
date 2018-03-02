@@ -1,0 +1,53 @@
+doctype html
+include globals
+html
+   head
+      title IMAC: #{title}
+      link(rel='stylesheet', href='/stylesheets/style.css')
+      link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+      link(rel='stylesheet', href='https://cdn.rawgit.com/daneden/animate.css/master/animate.css')
+
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js")
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js")
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.4.1/packaged/jquery.noty.packaged.min.js")
+      script(src="/javascripts/global.js")
+      script(src="/javascripts/layout.js")
+      script(src="https://cdn.rawgit.com/jeresig/jquery.hotkeys/master/jquery.hotkeys.js")
+
+      if(admin)
+         script(src="/javascripts/admin-layout.js")
+
+      block stylesheets
+      block javascripts
+
+
+
+   body
+      .flash-messages
+         block flash-messages
+            if errors
+               for error in errors
+                  .error=error
+            if messages
+               for message in messages
+                  .success=message
+
+      block header
+         .header
+            .app-home
+               a.home-link.fa.fa-gavel.fa-2x(href='/imac') IMAC
+            .user-menu
+               i#user-menu-button.menu-button.fa.fa-bars.fa-2x
+               .menu-pointer
+               ul#user-menu-container.menu-container
+                  include menu.jade
+            if(admin)
+               .active-users-menu
+                  i#active-users-button.menu-button.fa.fa-users.fa-2x.popr(data-id="1")
+                  .active-users-count.menu-button-counter
+                  .menu-pointer
+                  #active-users-container.menu-container
+            .user-info You are logged in as&nbsp;
+               b#username= user
+      .page-content
+         block content

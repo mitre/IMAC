@@ -1,0 +1,36 @@
+extends layout
+block javascripts
+   script(src="/javascripts/user.js")
+block content
+   .user-settings-container.settings-container
+      h3 User Settings
+      form(name='user_settings', action='/imac/users/edit/' + user_data._id, method='post')
+         table.user-settings.settings-table
+            tr.user-setting
+               td.setting-label user name
+               td=user_data._id
+            tr.user-setting
+               td.setting-label email
+               td
+                  input(type='email' name='email' value=user_data.email required=true)
+            if(admin)
+               tr.user-setting
+                  td.setting-label admin
+                  td
+                     if(user_data._id == user)
+                        input(type='hidden' value='on' name='admin')
+                        input(type='checkbox' checked=user_data.admin disabled title="You cannot disable admin on own account.")
+                     else
+                        input(type='checkbox' name='admin' checked=user_data.admin)
+            tr.user-setting
+               td.setting-label change password
+               td
+                  input#password(type='password' name='password' placeholder='Password')
+            tr.user-setting
+               td.setting-label
+               td
+                  input#password-confirm(type='password' name='password-confirm' placeholder='Confirm Password')
+         .button-container
+            input(type='submit', value='Save Settings')
+            .cancel-label
+               a.cancel-button(href='/imac/users/') Cancel

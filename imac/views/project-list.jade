@@ -1,0 +1,104 @@
+div#project-list
+   if data.length == 0
+      .no-projects.settings-container
+         h1 Welcome to #[span.mini-logo #[i.fa.fa-gavel]IMAC]
+         if admin
+            h4 There are no #[i active] projects in the system right now. #[a(href='/imac/project/new') Click here] to create a new one
+               if pending_projects.length > 0
+                  | , or finish setting up a pending project, below
+               | .
+         else
+            h4 There are currently no active projects to be adjudicated. Contact an administrator about setting up new projects.
+
+   each proj in data
+      .project
+         h3.project-name= proj.project_info[0].name
+         if proj.user_incomplete_queries > 0
+            a.button(href='/imac/judge/' + proj._id)
+                  .adjudicate.blue-button Adjudicate
+         else
+            .button
+               .adjudicate.blue-button.disabled Adjudications Complete!
+
+         h4.personal-stats.header Personal Stats
+         table.stats-table
+            tr.user-percent-complete.stat-container.table-span
+               td(colspan="4")
+                  .data.percent-complete #{proj.user_percent_complete}
+            tr.user-judgements.stat-container
+               td.data #{proj.user_completed_judgements}
+               td.label Complete Judgements
+               //.user-remaining-judgements.stat-container
+               td.data #{proj.user_incomplete_judgements}
+               td.label Remaining Judgements
+            tr.user-complete.stat-container
+               td.data #{proj.user_completed_queries}
+               td.label Complete Adj. Sets
+               //.user-incomplete.stat-container
+               td.data #{proj.user_incomplete_queries}
+               td.label Remaining Adj. Sets
+
+         if admin
+            h4.project-stats.header Project Stats
+            table.stats-table
+               tr.stat-container.table-span
+                  td(colspan="4")
+                     .data.percent-complete #{proj.percent_complete}
+               tr.complete-judgements.stat-container
+                  td.data #{proj.total_complete_judgements}
+                  td.label Complete Judgements
+                  //.required-judgements.stat-container
+                  td.data=(proj.total_required_judgements - proj.total_complete_judgements)
+                  td.label Remaining Judgements
+
+               tr.complete-adjudications.stat-container
+                  td.data #{proj.total_complete_adjudication_sets}
+                  td.label Complete Adj. Sets
+                  //required-adjudications.stat-container
+                  td.data=(proj.total_required_adjudication_sets - proj.total_complete_adjudication_sets)
+                  td.label Remaining Adj. Sets
+               if (proj.total_conflicts > 0)
+                  tr.total-queries.stat-container
+                     td.data #{proj.total_queries}
+                     td.label Total Queries
+                     td.conflicts.data #{proj.total_conflicts}
+                     td.conflicts.label Conflicted Queries
+               else
+                  tr.total-queries.stat-container.table-span
+                     td(colspan="4")
+                        .data #{proj.total_queries}
+                        .label Total Queries
+
+            #tool
+            if (proj.total_conflicts > 0)
+               a.resolve-button(href='/imac/review/' + proj._id + '?showOnlyConflicted=true')
+                  button resolve
+            a.resolve-button(href='/imac/review/' + proj._id)
+               button review
+            a(href='/imac/project/' + proj._id)
+               button edit
+            a(href='/imac/import/' + proj._id)
+               button import queries
+            a(href='/imac/import/judgements/' + proj._id)
+               button import judgements
+            button.export-adjudications(href='/imac/export/' + proj._id) export adjudications
+            if archive
+               button.archive-toggle(href='/imac/project/archive/' + proj._id + '/false') restore
+            else
+               button.archive-toggle(href='/imac/project/archive/' + proj._id + '/true') archive
+
+if(pending_projects.length > 0 && admin)
+   h3.pending-project-header Pending Projects#[i.fa.fa-info-circle.pending-setup-info.info-button]
+   div#pending-project-list
+      each pending_proj in pending_projects
+         .project
+            h3.project-name=pending_proj.name
+            a(href='/imac/project/' + pending_proj._id)
+               button edit
+            a(href='/imac/import/' + pending_proj._id)
+               button import queries
+            if archive
+               button.archive-toggle(href='/imac/project/archive/' + pending_proj._id + '/false') restore
+            else
+               button.archive-toggle(href='/imac/project/archive/' + pending_proj._id + '/true') archive
+

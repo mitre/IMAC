@@ -1,0 +1,24 @@
+extends layout
+
+block content
+   .settings-container
+      h3 User Settings
+
+      table#users-list
+         tr.header-row
+            th Username
+            th Email Address
+            th Last Login
+            th Admin
+            th.buttons
+         each user in users
+            tr
+               td.username=user._id
+               td.email=user.email
+               td.last-login(title=user.last_login_string)=user.since_last_login
+               td.admin
+                  input(type='checkbox' disabled checked=user.admin)
+               td.query-buttons
+                  a(href='/imac/users/edit/' + user._id)
+                     .edit-button
+                        i.fa.fa-edit

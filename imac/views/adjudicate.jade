@@ -1,0 +1,68 @@
+extends layout
+block javascripts
+   script var view = "#{view}";
+   script(src="/javascripts/keyboard-judge.js")
+block content
+   include popup
+   if(query != null)
+      //-
+         #view-toggle(style='float:left;')
+            if (view == 'full')
+               a(href='?query_id=#{query._id}&view=full')
+                  .keyboard-view.view-button.selected
+                     .fa.fa-th
+               a(href='?query_id=#{query._id}&view=cover-flow')
+                  .mouse-view.view-button
+                     .fa.fa-file
+            else
+               a(href='?query_id=#{query._id}&view=full')
+                  .keyboard-view.view-button
+                     .fa.fa-th
+               a(href='?query_id=#{query._id}&view=cover-flow')
+                  .mouse-view.view-button.selected
+                     .fa.fa-file
+      div(style='clear:both;') &nbsp;
+      h2.project-question=project.question
+      #records(project-id=project_id query-id=query._id class='scroller ' + view)
+         #regular-adjudication-navigation.adjudication-navigation
+            #prev-record.fa.fa-arrow-circle-left.nav-button
+            #adjudication-count
+               .count=query.responses.length
+               .label remaining
+            #next-record.fa.fa-arrow-circle-right.nav-button
+         each response in query.responses
+            - var judgement = (judgements[response._id] != undefined) ? judgements[response._id] : '';
+            .record.k-record.active(id=response.id match-id=response.id class='record k-record active' + judgement)
+               .expand-button
+                  .fa.fa-search-plus
+               table(class='obj ' + alignment + judgement )
+                  -for (var i = 0; i < query.data_rows.length ; ++i)
+                     tr
+                        if (project.show_labels)
+                           td.labels.property-row!=project.row_labels[i]
+                        td.property-row.query!=query.data_rows[i]
+
+                        if(response.data_rows[i].deemphasize)
+                           td.property-row.match.deemphasize!=response.data_rows[i]
+                        else
+                           td.property-row.match!=response.data_rows[i]
+                  tr.footer
+                     if(project.show_labels)
+                        td.label-placeholder
+
+                     td.footer-buttons(colspan=2)
+                        .false-button.footer-button
+                           i.fa.fa-times
+                        .maybe-button.footer-button
+                           i.fa.fa-question
+                        .true-button.footer-button
+                           i.fa.fa-check
+                        .stretch
+      #bottom-buttons(style='width:100%;clear:both;')
+         #next-page
+            button(onclick='next_page();') Next
+         #next-hotkey-prompt (click 'next' or press 'L' for next query)
+      .hotkey-prompt Press '/' or '?' for a list of all keyboard shortcuts.
+   else
+      h2.no-query #{project.name}: Congratulations, adjudications complete!
+      a(href='/imac/') Return to Project List

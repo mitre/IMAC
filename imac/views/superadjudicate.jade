@@ -1,0 +1,54 @@
+doctype html
+- var query = review_info.queries[0]
+#records.super-adjudication(project-id=project_id query-id=query._id)
+   each response in query.responses
+      //- If records are conflicted or have previously been super-adjudicated they can be selected
+      - var active_class = (response.conflicted || response.super_adjudicated) ? ' active' : ' deactivated';
+      - var conflicted_class = (response.conflicted) ? ' conflicted' : '';
+      - if (response.match != undefined) { var match_class = (response.match) ? ' record-true' : ' record-false';}
+      - else {var match_class = ' record-maybe';}
+
+      div(id=response.id match-id=response._id class="record review k-record" + active_class + match_class + conflicted_class)
+         table(class='obj ' + review_info.alignment)
+            -for (var i = 0; i < query.rows.length ; ++i)
+               tr
+                  if (review_info.show_labels)
+                     td.labels.property-row!=review_info.row_labels[i]
+                  td.property-row.query!=query.rows[i]
+                  td.property-row.match!=response.rows[i]
+            tr
+               if (review_info.show_labels)
+                  td.label-placeholder
+               td.adjudications(colspan=2)
+                  .false-users.users
+                     .false-icon.icon
+                     if response.false_users.length > 0
+                        each judgement in response.false_users
+                           div(class="user #{judgement.username} #{judgement.super_adjudication_class}")=judgement.username
+                  .maybe-users.users
+                     .maybe-icon.icon
+                     if response.maybe_users.length > 0
+                        each judgement in response.maybe_users
+                           div(class="user #{judgement.username} #{judgement.super_adjudication_class}")=judgement.username
+                  .true-users.users
+                     .true-icon.icon
+                     if response.true_users.length > 0
+                        each judgement in response.true_users
+                           div(class="user #{judgement.username} #{judgement.super_adjudication_class}")=judgement.username
+
+            tr.footer
+               if(review_info.show_labels)
+                  td.label-placeholder
+
+               td.footer-buttons(colspan=2)
+                  .false-button.footer-button
+                     i.fa.fa-times
+                  .true-button.footer-button
+                     i.fa.fa-check
+                  .stretch
+#super-adjudication-navigation.adjudication-navigation
+   #prev-conflict.fa.fa-arrow-circle-left.nav-button
+   #adjudication-count
+      .count 370
+      .label remaining
+   #next-conflict.fa.fa-arrow-circle-right.nav-button

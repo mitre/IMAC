@@ -1,0 +1,26 @@
+extends layout
+
+block stylesheets
+   script(src="/javascripts/import.js")
+
+block content
+   h3= title
+   .settings-container
+      form.import-form(name='import_runs' action=action method='post')
+         input(type='hidden' name='project_id' value=project._id)
+         ul.run-import
+            li.file-toggle
+               label
+                  input.text-radio(type='radio' name='file-toggle' checked)
+                  | Text Import
+               label
+                  input.file-radio(type='radio' name='file-toggle')
+                  | Upload File
+            li.text-import.import Run Data: #[i.fa.fa-info-circle.judgement-import-info.info-button]
+               textarea.run-data(name='run_data')
+            li.file-import.import Select File: #[i.fa.fa-info-circle.judgement-import-info.info-button]
+               input(type='file' name='import_file')
+
+            li
+               input.import-judgements-button(type='submit', value='Import Judgements')
+               a.cancel-button(href='/imac') Cancel

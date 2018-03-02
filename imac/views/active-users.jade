@@ -1,0 +1,11 @@
+h3 #[span#active-users-count #{active_users.length}] Active Users
+a.manage-users(href='/imac/users/')
+   .blue-button manage users
+#active-users
+   each user in active_users
+      .active-user
+         a(href='/imac/users/edit/'+user._id)
+            .user-id=user._id
+            .edit-button
+               i.fa.fa-pencil
+         .activity=user.last_active

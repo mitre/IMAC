@@ -1,0 +1,18 @@
+extends logged-out-layout
+block javascripts
+   script(src="/javascripts/login.js")
+block content
+   .login-form
+      form(action="/login" method="post")
+         input#redirect(type="hidden" name="redirect" value=redirect)
+         .login-input
+            input#username(type="text" name="_id" required="true" placeholder="Username")
+         .login-input
+            input#password(type="password" name="password" required="true" placeholder="Password")
+         .messages
+            #error-message=error_message
+         .in
+            input.blue-button(type="submit" value="Sign In")
+   .login-links
+      a.float-left(href="/create-account") Create Account
+      a#forgot-password.float-right(href="/forgot-password/") Forgot Password?

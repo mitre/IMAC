@@ -1,0 +1,11 @@
+extends layout
+
+block javascripts
+   script(src="/javascripts/index.js")
+
+block content
+   h3=title
+   a(href='/imac/')
+      button Return to Project List
+
+   include project-list

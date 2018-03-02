@@ -1,0 +1,17 @@
+extends layout
+
+block javascripts
+   script(src="/javascripts/index.js")
+
+block content
+   h3.
+      Adjudication Projects
+   if admin
+      a(href='/imac/project/new')
+         button + Create New Project
+      a(href='/imac/projects/archived')
+         button View Archived Projects
+
+   include project-list
+
+

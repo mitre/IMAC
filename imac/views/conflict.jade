@@ -1,0 +1,24 @@
+extends layout
+
+block stylesheets
+   link(rel='stylesheet', href='/stylesheets/style.css')
+   link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css")
+   link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css")
+block javascripts
+   script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js")
+   script(src="/javascripts/index.js")
+   script(src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js")
+
+block content
+
+   h1.
+      Q: Is this a match?
+
+   div#query_record
+
+   div#choices(style="clear:both;margin-top:20px;margin-bottom:20px;")
+      button#yes_button(onclick="click_yesno(true);") Yes
+      button#no_button(onclick="click_yesno(false);") No
+
+   div#owl-demo(class="owl-carousel owl-theme")
+
