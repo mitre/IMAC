@@ -7,7 +7,7 @@
     * https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
 
 ## GETTING THE SOURCE
-1. git clone https://gitlab.mitre.org/iml/Owl && cd Owl/imac
+1. git clone https://github.com/mitre/IMAC && cd /imac
 
 ## INSTALLING PACKAGE DEPS w/ NPM
 1. npm update
