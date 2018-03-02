@@ -15,7 +15,7 @@
 ## RUNNING
 1. Start mongodb (configuring it as a service/daemon/etc. is recommended):
     * `$ mongod --dbpath <IMAC extraction dir>/imac/data/`
-2. Owl/imac/run.sh
+2. imac/run.sh
  
 ## FIRST USE
 Once you’ve got the site up and running there are three steps between you and having a project ready to adjudicate:
