@@ -46,17 +46,18 @@ $(document).ready(function () {
    // Add the loaded query id to the end of the url for the window so the user can refresh if need be
    window.history.replaceState("", "", window.location.pathname + "?query_id=" + query_id + "&view=" + view);
 
-   fixRowHeights();
-
    // Show/Hide expand-button when mouse hovering over a specific record
    $('.k-record').mouseenter(function () {
       $(this).addClass('show-footer').find('.expand-button').show();
 
-   });
-   $('.k-record').mouseleave(function () {
+   }).mouseleave(function () {
       $(this).removeClass('show-footer').find('.expand-button').hide();
    });
 
+   // Bind Sort Handler
+   $('#sort-dropdown').change((event) => {
+      sort_records($(this).find(':selected').val())
+   });
 
    // Hotkey- Mark True
    $(document).bind('keydown', 'm shift+m', function () {
@@ -376,13 +377,31 @@ function scroll_active_record() {
    if (active_top < view_top) {
       // Scroll up so the top of the page is 20 px above the top of the element
       $('html, body').animate({
-         scrollTop: active_top - 80
+         scrollTop: active_top - 100
       });
    } else if (active_bottom > view_bottom) {
       $('html, body').animate({
          //scrollTop: active_bottom - window.innerHeight + 20
-         scrollTop: active_top - 80
+         scrollTop: active_top - 100
 
       });
    }
+}
+
+function sort_records(property_index) {
+   const $records = $('#records .record');
+
+   console.log($records);
+
+   if (!!property_index) {
+      console.log("About to sort field_index:", property_index);
+      $records.sort((a, b) => {
+         return $(a).find('.match')[property_index].textContent > $(b).find('.match')[property_index].textContent ? 1 : -1;
+      }).appendTo('#records');
+   } else {
+      console.log("No usable field_index to sort. Reverting to original sorting");
+      // todo: restore original sorting
+   }
+
+   jump_to_active_record();
 }

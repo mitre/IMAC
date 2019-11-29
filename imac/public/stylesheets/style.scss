@@ -922,6 +922,22 @@ span.no_energy {
    text-align: center;
 }
 
+#sort-controls {
+   padding-bottom: 2px;
+   .sort-label {
+      margin-right: 3px;
+      font-size: 10px;
+      color: gray;
+   }
+   * {
+      display: inline-block;
+   }
+}
+
+#sort-controls:hover {
+   box-shadow: none;
+}
+
 div.row {
    margin-top: 40px;
    display: inline-block;
@@ -1359,6 +1375,5 @@ b.conflict-filter-header {
    }
 
 }
-
 
 
