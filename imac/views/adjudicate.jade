@@ -40,9 +40,9 @@ block content
                   each field, index in project.field_layout
                      option(value=index)=field
       #records(project-id=project_id query-id=query._id class='scroller ' + view)
-         each response in query.responses
+         each response, index in query.responses
             - var judgement = (judgements[response._id] != undefined) ? judgements[response._id] : '';
-            .record.k-record.active(id=response.id match-id=response.id class='record k-record active' + judgement)
+            .record.k-record.active(id=response.id match-id=response.id class='record k-record active' + judgement original-index=index)
                .expand-button
                   .fa.fa-search-plus
                table(class='obj ' + alignment + judgement )

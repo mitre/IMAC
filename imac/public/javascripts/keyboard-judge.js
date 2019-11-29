@@ -391,17 +391,21 @@ function scroll_active_record() {
 function sort_records(property_index) {
    const $records = $('#records .record');
 
-   console.log($records);
-
    if (!!property_index) {
-      console.log("About to sort field_index:", property_index);
+      // About to sort field_index: property_index
       $records.sort((a, b) => {
          return $(a).find('.match')[property_index].textContent > $(b).find('.match')[property_index].textContent ? 1 : -1;
       }).appendTo('#records');
    } else {
-      console.log("No usable field_index to sort. Reverting to original sorting");
-      // todo: restore original sorting
+      // No usable field_index to sort. Reverting to original sorting
+      $records.sort((a, b) => {
+         return $(a).attr('original-index') > $(b).attr('original-index') ? 1 : -1;
+      }).appendTo('#records');
    }
 
+   // Flash or Jump To the currently active record
    jump_to_active_record();
+
+   // Blur the select button to return the user to keyboard shortcut mode
+   $('#sort-dropdown').blur();
 }
