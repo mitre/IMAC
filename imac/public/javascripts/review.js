@@ -74,7 +74,6 @@ $(document).ready(function () {
 
 
          setQueryConflictRemaining();
-         fixRowHeights();
       }).fail(function(err){
          console.log(err);
       });

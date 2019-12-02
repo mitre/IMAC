@@ -58,32 +58,6 @@ $(document).ready(function () {
 
 });
 
-function fixRowHeights() {
-   return;
-   // Match heights for all table elements
-   $('.record > .obj').each(function (index) {
-      $label_rows = $(this).find('.labels > .property-row');
-      $query_rows = $(this).find('.query > .property-row');
-      $match_rows = $(this).find('.match > .property-row');
-      for (var row_index = 0; row_index < $query_rows.length; row_index++) {
-
-         $query_row = $($query_rows[row_index]);
-         $match_row = $($match_rows[row_index]);
-         var query_height = $query_row.height();
-         var match_height = $match_row.height();
-
-         var max_height = (query_height > match_height) ? query_height : match_height;
-         $query_row.height(max_height);
-         $match_row.height(max_height);
-         // If the label row exists set it's height as well
-         if ($label_rows[row_index] != undefined) {
-            $($label_rows[row_index]).height(max_height);
-         }
-
-      }
-   });
-}
-
 function getUrlParameter(sParam, sDefault=undefined) {
    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
       sURLVariables = sPageURL.split('&'),

@@ -23,16 +23,26 @@ block content
                      .fa.fa-file
       div(style='clear:both;') &nbsp;
       h2.project-question=project.question
+      #regular-adjudication-navigation.adjudication-navigation
+         #prev-record.fa.fa-arrow-circle-left.nav-button
+         #adjudication-count
+            .count=query.responses.length
+            .label remaining
+         #next-record.fa.fa-arrow-circle-right.nav-button
+         #sort-controls
+            .sort-label Sort by
+            select#sort-dropdown(name='sort')
+               option(value=null)
+               if (project.show_labels)
+                  each label, index in project.row_labels
+                     option(value=index)=label
+               else
+                  each field, index in project.field_layout
+                     option(value=index)=field
       #records(project-id=project_id query-id=query._id class='scroller ' + view)
-         #regular-adjudication-navigation.adjudication-navigation
-            #prev-record.fa.fa-arrow-circle-left.nav-button
-            #adjudication-count
-               .count=query.responses.length
-               .label remaining
-            #next-record.fa.fa-arrow-circle-right.nav-button
-         each response in query.responses
+         each response, index in query.responses
             - var judgement = (judgements[response._id] != undefined) ? judgements[response._id] : '';
-            .record.k-record.active(id=response.id match-id=response.id class='record k-record active' + judgement)
+            .record.k-record.active(id=response.id match-id=response.id class='record k-record active' + judgement original-index=index)
                .expand-button
                   .fa.fa-search-plus
                table(class='obj ' + alignment + judgement )
