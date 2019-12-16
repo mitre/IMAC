@@ -19,6 +19,7 @@ var totalImports;
 var projectSchema = new Schema({
    name: String,
    question: String,
+   guidelines_link: String,
    alignment: String,
    archived: {type: Boolean, default: false},
    users: [], //Todo: this is here for legacy reasons for preventing a crash, should be removed

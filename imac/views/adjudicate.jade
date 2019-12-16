@@ -23,6 +23,10 @@ block content
                      .fa.fa-file
       div(style='clear:both;') &nbsp;
       h2.project-question=project.question
+         if(project.guidelines_link)
+            .guidelines-link
+               a(target='_blank', href=project.guidelines_link) adjudication guidelines
+
       #regular-adjudication-navigation.adjudication-navigation
          #prev-record.fa.fa-arrow-circle-left.nav-button
          #adjudication-count

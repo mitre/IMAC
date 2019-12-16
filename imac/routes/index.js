@@ -224,12 +224,15 @@ router.get('/review/:id', function (req, res, next) {
 
    Projects.getReviewQueries(req.params.id,
       function (review_info) {
-         res.render('review', {
-            title: 'Review Adjudications',
-            adjudicators: review_info.involved_users,
-            queries: review_info.queries,
-            project_id: req.params.id,
-            conflicted_count: review_info.conflicted_count
+         Projects.getProjectInfo(req.params.id, function (err, project) {
+            res.render('review', {
+               title: 'Review Adjudications',
+               project: project,
+               adjudicators: review_info.involved_users,
+               queries: review_info.queries,
+               project_id: req.params.id,
+               conflicted_count: review_info.conflicted_count
+            });
          });
       });
 });

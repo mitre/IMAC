@@ -283,7 +283,12 @@ function toggleUser() {
 
       // Loop through the queries where this user is involved, hide any where there are no active users
       $(".query[involved-users~=" + user_class + "]:not([involved-users~='" + active_users.join("'],[involved-users~='") + "'])").hide();
+
    }
+
+   // Update Conflicted Count
+   var conflict_count = $('.query.conflicted:visible').length;
+   $('#conflict-count').html(conflict_count);
 }
 
 function showHideQueries() {

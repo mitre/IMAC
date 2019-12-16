@@ -16,6 +16,10 @@ block content
                td.setting-label adjudication question
                td
                   textarea.project-question(name='question')=project.question
+            tr.project-setting
+               td.setting-label guidelines link
+               td
+                  input.link-input(type='text', name='guidelines_link', value=project.guidelines_link, placeholder='http://example.link')
 
          h4#layout-settings-header.settings-header Layout Settings
          #layout-settings-container
