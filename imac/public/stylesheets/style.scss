@@ -387,6 +387,10 @@ td.setting-label {
    color: #656565;
 }
 
+input.link-input {
+   width: 330px;
+}
+
 .alignment-settings > div {
    display: inline-block;
    text-align: center;
@@ -885,6 +889,16 @@ div.adjudication-navigation > div:hover {
    }
 }
 
+.guidelines-link a {
+   color: gray;
+   font-size: 13px;
+   font-weight: normal;
+}
+
+.d-inline {
+   display: inline;
+}
+
 #fatigue-meter {
    display: none;
 
@@ -1322,7 +1336,12 @@ b.conflict-filter-header {
 
 }
 
-.review-filters {
+.review-filters{
+   padding-bottom: 10px;
+}
+
+.conflict-count {
+   text-align: center;
    padding-bottom: 10px;
 }
 

@@ -20,8 +20,6 @@ block content
    //- Main Content
    .title-div
       .page-title=title
-      .conflict-count Conflicted Queries:
-         span#conflict-count=conflicted_count
    .review-filters
       .adjudicator-filters.filters
          b.adjudicators-header Adjudicator Filters
@@ -36,6 +34,11 @@ block content
             label#all-button(for="all-matches") All
             input#conflicts(type="radio", name="radio")
             label#conflicts-button(for="conflicts") Conflicts
+   .conflict-count Conflicted Queries:
+      span#conflict-count=conflicted_count
+      if (project.guidelines_link)
+         .guidelines-link
+            a(href=project.guidelines_link, target='_blank') adjudication guidelines
    .query-container
       each query in queries
          - var conflict_class = query.is_conflicted ? 'conflicted' : 'non-conflicted'
