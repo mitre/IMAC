@@ -1,0 +1,15 @@
+[Unit]
+Description=IMAC Frontend NodeJS App
+
+[Service]
+Type=simple
+User=imac
+Group=imac
+WorkingDirectory=/opt/imac/source/imac
+ExecStart=/usr/bin/npm start
+Restart=always
+Environment="HOST=127.0.0.1"
+Environment="PORT=3000"
+
+[Install]
+WantedBy=default.target
