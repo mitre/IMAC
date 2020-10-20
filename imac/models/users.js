@@ -127,11 +127,12 @@ exports.forgotPassword = function (username, origin, callback) {
             from: from_address,
             to: user.email,
             subject: 'IMAC Password Reset',
-            content: "If you did not request this password reset email please disregard this message.\n\n" +
-            "This password reset link will be valid for the next 24 hours:\n" +
+            html: "If you did not request this password reset email please disregard this message.<br>" +
+            "This password reset link will be valid for the next 24 hours:<br>" +
             reset_link
          }, function (err, reply) {
             console.log(err && err.stack);
+            console.dir(reply);
          });
 
          messages['status_message'] = "Password reset email sent to: " + user.email;
@@ -170,7 +171,7 @@ exports.resetPassword = function (data, callback) {
                      from: from_address,
                      to: user.email,
                      subject: "IMAC Password Changed",
-                     content: "The password for the account '" + user._id + "' has been changed. " +
+                     html: "The password for the account '" + user._id + "' has been changed. " +
                      "Please contact your administrator if this change was unexpected."
                   }, function (err, reply) {
                      console.log(err && err.stack);
