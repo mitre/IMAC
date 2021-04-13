@@ -1,0 +1,11 @@
+[Unit]
+Description=Make backup of IMAC mongodb
+
+[Service]
+Type=oneshot
+User=mongodb
+Group=mongodb
+ExecStart=/opt/imac/backup.sh
+
+[Install]
+WantedBy=default.target
