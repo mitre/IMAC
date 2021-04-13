@@ -7,7 +7,7 @@ var busboyBodyParser = require('busboy-body-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var mongoose = require('mongoose');
-var MONGO_HOST = process.env.MONGO_HOST
+var MONGO_HOST = (process.env.MONGO_HOST || 'localhost')
 var MONGO_PORT = (process.env.MONGO_PORT || '27017')
 var MONGO_URL = 'mongodb://' + MONGO_HOST + ':' + MONGO_PORT + '/imac'
 mongoose.connect(MONGO_URL);
