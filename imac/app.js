@@ -7,7 +7,10 @@ var busboyBodyParser = require('busboy-body-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/imac');
+var MONGO_HOST = process.env.MONGO_HOST
+var MONGO_PORT = (process.env.MONGO_PORT || '27017')
+var MONGO_URL = 'mongodb://' + MONGO_HOST + ':' + MONGO_PORT + '/imac'
+mongoose.connect(MONGO_URL);
 var MongoStore = require('connect-mongo')(session);
 var connect_ensure_login = require('connect-ensure-login');
 
@@ -23,7 +26,7 @@ var helmet = require('helmet');
 var db = require('./db');
 
 // Connect to Mongo on start
-db.connect('mongodb://localhost:27017/imac', function (err) {
+db.connect(MONGO_URL, function (err) {
    if (err) {
       console.log('Unable to connect to Mongo.');
       process.exit(1);
@@ -78,6 +81,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Initialize Passport and restore authentication state, if any, from the
 // session.
+
 app.use(session({
    secret: 'imac',
    store: new MongoStore({
